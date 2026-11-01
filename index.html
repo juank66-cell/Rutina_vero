@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Rutina Fuerza · Vero</title>
+<meta name="description" content="Registro de rutina de fuerza – Mesociclo 1, una sesión semanal Full Body">
+<meta name="theme-color" content="#0a0a0b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rutina Vero">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg-elev: #141416;
+    --bg-card: #1a1a1d;
+    --border: #2a2a2e;
+    --border-strong: #3a3a40;
+    --text: #e8e8ea;
+    --text-dim: #8a8a90;
+    --text-faint: #5a5a60;
+    --accent: #d4ff3a;
+    --accent-dim: #a8cc2e;
+    --warn: #ff6b3a;
+    --danger: #e13a3a;
+    --ok: #3ad48a;
+    --hombro: #ff9a3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding-bottom: 80px;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Header */
+  header {
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+    padding: 24px 20px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  h1 .accent { color: var(--accent); }
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+    border-radius: 0;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .btn.primary:hover { background: var(--accent-dim); color: var(--bg); }
+  .btn.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+  /* Selectors */
+  .selector-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .week-selector, .day-selector {
+    display: flex;
+    gap: 4px;
+  }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    color: var(--text-dim);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .pill:hover { border-color: var(--border-strong); color: var(--text); }
+  .pill.active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .pill.deload { border-color: var(--warn); color: var(--warn); }
+  .pill.deload.active { background: var(--warn); color: var(--bg); border-color: var(--warn); }
+
+  /* Main container */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+
+  /* Session header */
+  .session-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .session-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .session-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+  }
+  .session-params {
+    display: flex;
+    gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .param {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .param-label { color: var(--text-faint); font-size: 10px; }
+  .param-value { color: var(--accent); font-size: 14px; font-weight: 700; }
+
+  /* Wellness panel */
+  .wellness {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .wellness-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .wellness-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .wellness-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .wellness-item label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .wellness-item select, .wellness-item input {
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 6px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    border-radius: 0;
+  }
+  .wellness-item select:focus, .wellness-item input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  /* Exercise card */
+  .exercise {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .exercise-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elev);
+  }
+  .exercise-code {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    color: var(--accent);
+    min-width: 28px;
+  }
+  .exercise-name {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.25;
+  }
+  .exercise-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .hombro-warn {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--hombro);
+    background: rgba(255, 154, 58, 0.1);
+    padding: 2px 6px;
+    margin-left: 6px;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--hombro);
+  }
+  .exercise-params {
+    display: flex;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+  }
+  .exercise-params span strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* Sets table */
+  .sets-body { padding: 12px 16px 16px; }
+  .sets-prev {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .sets-prev strong { color: var(--accent-dim); font-weight: 500; }
+  .sets-grid {
+    display: grid;
+    grid-template-columns: 40px 1fr 1fr 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .sets-grid.header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .set-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  .set-input {
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 0;
+    text-align: center;
+  }
+  .set-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(212, 255, 58, 0.05);
+  }
+  .set-input.done { border-color: var(--ok); color: var(--ok); }
+  .set-check {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .set-check:hover { border-color: var(--ok); color: var(--ok); }
+  .set-check.checked { background: var(--ok); color: var(--bg); border-color: var(--ok); }
+
+  .exercise-notes {
+    margin-top: 10px;
+  }
+  .exercise-notes textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    min-height: 40px;
+    resize: vertical;
+    border-radius: 0;
+  }
+  .exercise-notes textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  /* Tech notes modal */
+  .tech-note-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-dim);
+    padding: 4px 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.15s;
+  }
+  .tech-note-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .tech-note-content {
+    padding: 12px 16px;
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    display: none;
+  }
+  .tech-note-content.open { display: block; }
+
+  /* Footer status */
+  .footer-status {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+  .status-left { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  .status-indicator { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; background: var(--ok); border-radius: 50%; }
+  .dot.warn { background: var(--warn); }
+  .dot.off { background: var(--text-faint); }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .modal h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .modal p { margin-bottom: 12px; font-size: 14px; }
+  .modal label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    margin-top: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .modal input[type="text"], .modal input[type="url"], .modal textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    border-radius: 0;
+    margin-bottom: 8px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* Panel de volumen semanal */
+  .volume-panel {
+    margin-top: 32px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 16px;
+  }
+  .volume-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .volume-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .volume-cell {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .volume-cell .label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .volume-cell .value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .volume-cell .target {
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-top: 1px;
+  }
+
+  /* Finish section */
+  .finish-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 2px solid var(--border);
+  }
+  .finish-summary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .finish-summary strong { color: var(--text); font-weight: 700; }
+  .btn-finish-session {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    background: var(--ok);
+    color: var(--bg);
+    border: none;
+    padding: 20px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-finish-session:hover { background: var(--accent); }
+  .btn-finish-session.completed {
+    background: var(--bg-elev);
+    color: var(--ok);
+    border: 1px solid var(--ok);
+  }
+  .btn-finish-session.completed:hover { background: var(--bg-card); }
+  .finish-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  /* Finish Timer (tiempo total en header) */
+  .session-duration {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+  .session-duration.active { color: var(--accent); }
+
+  /* Rest Timer flotante */
+  .rest-timer {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--accent);
+    color: var(--bg);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Archivo Black', sans-serif;
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent), 0 10px 40px rgba(0,0,0,0.6);
+    z-index: 200;
+    transition: transform 0.3s cubic-bezier(.2,.9,.3,1.2);
+    min-width: 280px;
+    max-width: 90vw;
+  }
+  .rest-timer.visible { transform: translateX(-50%) translateY(0); }
+  .rest-timer.finished { background: var(--warn); animation: pulse 0.6s ease-in-out 3; }
+  .rest-timer.paused { background: var(--text-dim); }
+  .rest-timer.paused .rest-time { opacity: 0.7; }
+  @keyframes pulse {
+    0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+    50% { transform: translateX(-50%) translateY(0) scale(1.05); }
+  }
+  .rest-time {
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    min-width: 90px;
+    text-align: center;
+  }
+  .rest-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .rest-exercise {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .rest-actions { display: flex; gap: 6px; margin-left: auto; }
+  .rest-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--bg);
+    color: var(--accent);
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rest-btn:hover { opacity: 0.85; }
+  .rest-btn.close { background: transparent; color: var(--bg); padding: 6px 8px; }
+
+  /* Set row nueva */
+  .set-row {
+    display: grid;
+    grid-template-columns: 30px 1fr 1fr 1fr 72px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .set-row.header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .set-row.done-row .set-input:not(:focus) {
+    border-color: var(--ok);
+    color: var(--ok);
+  }
+  .btn-fin {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 12px;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 8px 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    height: 36px;
+    transition: all 0.15s;
+  }
+  .btn-fin:hover { background: var(--accent-dim); }
+  .btn-fin.done {
+    background: var(--ok);
+    color: var(--bg);
+  }
+  .btn-fin.done:hover { background: transparent; color: var(--ok); border: 1px solid var(--ok); }
+
+  /* Placeholder sugerido */
+  .set-input.suggested:not(:focus) {
+    color: var(--text-faint);
+    font-style: italic;
+  }
+  .set-input.suggested:not(:focus)::placeholder {
+    color: var(--text-faint);
+    opacity: 1;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    h1 { font-size: 22px; }
+    .session-title { font-size: 22px; }
+    .exercise-head {
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+    }
+    .exercise-params {
+      grid-column: 1 / -1;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      margin-top: 4px;
+    }
+    .sets-grid {
+      grid-template-columns: 30px 1fr 1fr 1fr auto;
+      gap: 6px;
+    }
+    .set-row {
+      grid-template-columns: 26px 1fr 1fr 1fr 60px;
+      gap: 5px;
+    }
+    .set-input { font-size: 13px; padding: 6px 4px; }
+    .btn-fin { font-size: 11px; padding: 6px 2px; height: 34px; }
+    .session-params { gap: 16px; }
+    .rest-timer { min-width: auto; padding: 10px 14px; gap: 10px; }
+    .rest-time { font-size: 26px; min-width: 70px; }
+    .rest-exercise { max-width: 100px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <h1>Mesociclo <span class="accent">1</span></h1>
+      <div class="subtitle">1D · Full Body · 6 semanas · Vero</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn primary" id="btn-install" style="display:none;" onclick="handleInstall()">📲 Instalar</button>
+      <button class="btn" id="btn-export">Exportar JSON</button>
+      <button class="btn" id="btn-import">Importar</button>
+      <button class="btn" id="btn-sheets">Sheets</button>
+      <button class="btn danger" id="btn-reset">Reset</button>
+    </div>
+  </div>
+  <div class="selector-row">
+    <div class="week-selector" id="week-selector"></div>
+    <div style="width: 16px;"></div>
+    <div class="day-selector" id="day-selector"></div>
+  </div>
+</header>
+
+<main>
+  <section class="session-header">
+    <div>
+      <div class="session-title" id="session-title">Fuerza Full Body</div>
+      <div class="session-meta" id="session-meta">Pierna + empuje + tirón + core</div>
+    </div>
+    <div class="session-params">
+      <div class="param">
+        <span class="param-label">RIR objetivo</span>
+        <span class="param-value" id="rir-target">4</span>
+      </div>
+      <div class="param">
+        <span class="param-label">Carga vs base</span>
+        <span class="param-value" id="load-target">100%</span>
+      </div>
+      <div class="param">
+        <span class="param-label">Fase</span>
+        <span class="param-value" id="phase-label">Adaptación</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wellness">
+    <div class="wellness-title">Indicadores subjetivos · pre-entreno</div>
+    <div class="wellness-grid" id="wellness-grid"></div>
+  </section>
+
+  <section id="exercises-container"></section>
+
+  <section class="volume-panel">
+    <div class="volume-title">Volumen semanal · series completadas / objetivo</div>
+    <div class="volume-grid" id="volume-grid"></div>
+  </section>
+
+  <section class="finish-section">
+    <div class="finish-summary" id="finish-summary"></div>
+    <button class="btn-finish-session" id="btn-finish-session">
+      <span class="finish-icon">✓</span>
+      <span id="finish-btn-label">Finalizar rutina del día</span>
+    </button>
+  </section>
+</main>
+
+<!-- Rest Timer flotante -->
+<div class="rest-timer" id="rest-timer">
+  <div>
+    <div class="rest-label" id="rest-label">Descanso</div>
+    <div class="rest-exercise" id="rest-exercise"></div>
+  </div>
+  <div class="rest-time mono" id="rest-time">2:30</div>
+  <div class="rest-actions">
+    <button class="rest-btn" id="rest-minus">−15</button>
+    <button class="rest-btn" id="rest-plus">+15</button>
+    <button class="rest-btn" id="rest-pause">❚❚</button>
+    <button class="rest-btn close" id="rest-close">✕</button>
+  </div>
+</div>
+
+<div class="footer-status">
+  <div class="status-left">
+    <span class="status-indicator"><span class="dot" id="local-dot"></span>Local</span>
+    &nbsp;·&nbsp;
+    <span class="status-indicator"><span class="dot off" id="sheets-dot"></span>Sheets</span>
+    &nbsp;·&nbsp;
+    <span id="autosave-status">Autoguardado activo</span>
+  </div>
+  <div class="status-left" id="session-stats"></div>
+</div>
+
+<!-- Modal Sheets config -->
+<div class="modal-overlay" id="modal-sheets">
+  <div class="modal">
+    <h2>Integración Google Sheets</h2>
+    <p style="color: var(--text-dim); font-size: 13px;">
+      La integración con Sheets requiere desplegar un Google Apps Script como Web App.
+      <a href="#" id="link-show-script" style="color: var(--accent);">Ver script a copiar ▾</a>
+    </p>
+    <div id="script-block" style="display:none; margin: 12px 0; background: var(--bg); border: 1px solid var(--border); padding: 10px; max-height: 260px; overflow: auto;">
+      <pre id="script-code" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text); white-space: pre-wrap; margin: 0;"></pre>
+      <button class="btn" id="btn-copy-script" style="margin-top: 8px;">Copiar script</button>
+    </div>
+    <details style="margin: 8px 0; font-size: 12px; color: var(--text-dim);">
+      <summary style="cursor: pointer; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px;">Pasos de despliegue</summary>
+      <ol style="padding-left: 20px; margin-top: 8px; line-height: 1.7;">
+        <li>Abrí un <b>Google Sheet nuevo</b></li>
+        <li>Menú: <b>Extensiones → Apps Script</b></li>
+        <li>Borrá el código por defecto y pegá el script (link arriba)</li>
+        <li>Cambiá <code>cambia-este-token</code> por tu token (mismo que pegás acá)</li>
+        <li><b>Guardá</b> con el disquete, nombrá el proyecto</li>
+        <li><b>Desplegar → Nueva implementación → Aplicación web</b></li>
+        <li>Ejecutar como: <b>Yo</b></li>
+        <li>Quién tiene acceso: <b style="color: var(--warn);">Cualquier usuario</b> (crítico)</li>
+        <li>Aceptá permisos, copiá la URL que termina en <code>/exec</code></li>
+        <li>Pegá la URL acá abajo y tocá <b>Probar conexión</b></li>
+      </ol>
+      <p style="margin-top: 8px; color: var(--warn); font-size: 11px;">
+        ⚠ Si modificás el script después, usá <b>Administrar implementaciones → lápiz → Nueva versión</b> (no nueva implementación, eso cambia la URL).
+      </p>
+    </details>
+    <label>URL del Web App</label>
+    <input type="url" id="sheets-url" placeholder="https://script.google.com/macros/s/AKfyc.../exec">
+    <label>Token</label>
+    <input type="text" id="sheets-token" placeholder="tu-token-secreto">
+    <div class="modal-actions">
+      <button class="btn" id="btn-sheets-test">Probar conexión</button>
+      <button class="btn" id="btn-sheets-sync">Sincronizar ahora</button>
+      <button class="btn primary" id="btn-sheets-save">Guardar</button>
+      <button class="btn" id="btn-sheets-close">Cerrar</button>
+    </div>
+    <p id="sheets-msg" style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5; min-height: 18px;"></p>
+  </div>
+</div>
+
+<!-- Modal Import -->
+<div class="modal-overlay" id="modal-import">
+  <div class="modal">
+    <h2>Importar datos</h2>
+    <p style="color: var(--text-dim); font-size: 13px;">Pega el JSON exportado previamente.</p>
+    <textarea id="import-data" rows="10" style="width: 100%; margin-top: 8px;"></textarea>
+    <div class="modal-actions">
+      <button class="btn primary" id="btn-import-confirm">Importar</button>
+      <button class="btn" id="btn-import-close">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================
+   DEFINICIÓN DE LA RUTINA (mesociclo 6 semanas)
+   ============================================ */
+// ─── MESOCICLO 1 ── semanas 1-6 · ADAPTACIÓN + FUERZA (1 sesión/semana) ──────────────
+// Perfil: Vero, 50 años (nac. 30/10/1976). Objetivo: fuerza para frenar la pérdida de masa
+// muscular asociada a la edad y la menopausia. Ya hace natación 3 d/sem (~1300 m) y baile
+// los jueves → esta es la ÚNICA sesión de pesas de la semana.
+// [SUPUESTO: sin lesiones ni contraindicaciones médicas conocidas; experiencia previa con
+//  pesas baja-moderada; acceso a gimnasio con prensa, polea, máquina de pecho, mancuernas y barra.]
+//
+// Diseño:
+//  • Cuerpo completo en una sola sesión: patrones básicos (empuje de pierna, bisagra de cadera,
+//    empuje, tirón, carga/core) con ejercicios multiarticulares primero.
+//  • Con 1 sesión/semana el volumen semanal = volumen de la sesión (≈17 series en S1 y S6,
+//    ≈23 en S2-S5). La progresión se hace por CARGA y RIR, no por más series.
+//  • Rango de reps 8-10 en los básicos: cercano al 8-12 RM que el ACSM (2009) indica para
+//    principiantes. Si el bloque va bien, el meso 2 puede bajar a 6-8 con más carga.
+//  • Regla de progresión de carga: subir cuando se logren 1-2 reps por encima del rango
+//    objetivo en todas las series (ACSM 2009: aumento de 2-10 %). La app no calcula pesos.
+//  • Natación 3 d/sem ya carga mucho el hombro → press de hombro con agarre neutro (2 series),
+//    face pull para el hombro posterior/escápulas, y `hombro_flag` para vigilar molestias.
+//  • Sin variantes de semana par: con 1 sola exposición semanal, mantener el MISMO ejercicio
+//    entre semanas permite comparar cargas y progresar (las variantes rompían la comparación).
+//    El mecanismo `variante_semana_par` sigue soportado en el código por si se necesita.
+//  • `carga` = fracción SOBRE LA CARGA DE LA SEMANA 1. Valor orientativo (solo se muestra en
+//    el encabezado). [SUPUESTO: +3 a +5 % por semana, dentro del 2-10 % del ACSM.]
+//  • Deload (S6): -1 serie respecto a S2-S5 (piso de 2 por Math.max en getSeriesForWeek),
+//    RIR 4 y carga 85 %.
+// ─────────────────────────────────────────────────────────────────────────────
+const RUTINA = {
+  meta: {
+    atleta: "Vero",
+    edad: 50,
+    nacimiento: "1976-10-30",
+    objetivo: "Fuerza — mantener/ganar masa muscular y carga ósea (1 sesión semanal)",
+    split: "Full Body 1d",
+    duracion_semanas: 6,
+    meso: 1
+  },
+  semanas: [
+    { n: 1, fase: "Adaptación",      rir: 4, carga: 1.00, series_extra: -1, deload: false },
+    { n: 2, fase: "Base",            rir: 3, carga: 1.05, series_extra:  0, deload: false },
+    { n: 3, fase: "Acumulación",     rir: 3, carga: 1.08, series_extra:  0, deload: false },
+    { n: 4, fase: "Intensificación", rir: 2, carga: 1.12, series_extra:  0, deload: false },
+    { n: 5, fase: "Pico",            rir: 2, carga: 1.15, series_extra:  0, deload: false },
+    { n: 6, fase: "Deload",          rir: 4, carga: 0.85, series_extra: -1, deload: true  }
+  ],
+  // Grupos que se muestran en el panel de volumen. El objetivo de cada semana es la suma de
+  // series PLANIFICADAS de esa semana (no hay rangos MEV/MAV: sería inventar cifras para 1 sesión).
+  grupos_volumen: ["Cuádriceps", "Isquios/Glúteo", "Pecho", "Espalda", "Hombro", "Core"],
+  dias: [
+    {
+      id: "D1",
+      nombre: "Fuerza Full Body",
+      foco: "Pierna + empuje + tirón + core",
+      ejercicios: [
+        {
+          id: "D1-A", codigo: "A",
+          nombre: "Prensa de piernas 45°",
+          grupos: ["Cuádriceps"],
+          series_base: 4, reps: "8-10", tempo: "3-1-1-0",
+          descanso: "3:00",
+          nota: "Pies a la anchura de los hombros, rodillas alineadas con los pies, sin bloquear arriba. Baja hasta donde la espalda baja siga pegada al respaldo. Anota siempre el peso con el mismo criterio (kg en discos)."
+        },
+        {
+          id: "D1-B", codigo: "B",
+          nombre: "Peso muerto rumano con mancuernas",
+          grupos: ["Isquios/Glúteo"],
+          series_base: 3, reps: "8-10", tempo: "3-1-1-0",
+          descanso: "2:30",
+          nota: "Rodillas semiflexionadas y fijas. Empuja la cadera hacia atrás con las mancuernas pegadas a las piernas; baja hasta sentir estiramiento en isquios sin redondear la espalda. Peso = kg por mancuerna."
+        },
+        {
+          id: "D1-C", codigo: "C",
+          nombre: "Press de pecho en máquina",
+          grupos: ["Pecho"],
+          series_base: 3, reps: "8-10", tempo: "3-1-1-0",
+          descanso: "2:00", hombro_flag: true,
+          nota: "Asiento a la altura en que las manos queden a media altura del pecho. Escápulas atrás y abajo. Si el hombro molesta, reduce el rango — no empujes el dolor."
+        },
+        {
+          id: "D1-D", codigo: "D",
+          nombre: "Remo sentado en polea (agarre neutro)",
+          grupos: ["Espalda"],
+          series_base: 3, reps: "8-10", tempo: "2-1-1-1",
+          descanso: "2:00",
+          nota: "Pecho alto, tira el codo hacia la cadera, aprieta las escápulas 1 s, sin balancear el torso."
+        },
+        {
+          id: "D1-E", codigo: "E",
+          nombre: "Hip thrust con barra",
+          grupos: ["Isquios/Glúteo"],
+          series_base: 3, reps: "8-10", tempo: "2-1-1-2",
+          descanso: "2:00",
+          nota: "Barbilla metida, sin hiperextender la lumbar, empuja con los talones y aprieta el glúteo 1 s arriba. Empieza con barra sola y acolchado. Si no hay barra disponible: máquina de glúteo (mismo ejercicio, anótalo en las notas)."
+        },
+        {
+          id: "D1-F", codigo: "F",
+          nombre: "Press de hombro con mancuernas sentada (agarre neutro)",
+          grupos: ["Hombro"],
+          series_base: 2, reps: "10-12", tempo: "3-0-1-0",
+          descanso: "2:00", hombro_flag: true,
+          nota: "Palmas enfrentadas, codos ligeramente por delante del cuerpo (plano escapular), sin arquear la lumbar. Rango sin dolor; si hay molestia, reduce el rango. Peso = kg por mancuerna."
+        },
+        {
+          id: "D1-G", codigo: "G",
+          nombre: "Face pull en polea alta (cuerda)",
+          grupos: ["Espalda", "Hombro"],
+          series_base: 2, reps: "12-15", tempo: "2-1-1-2",
+          descanso: "60s", hombro_flag: true,
+          nota: "Polea a la altura de la cara; tira la cuerda hacia las orejas con los codos altos y rota hacia afuera al final. Carga ligera, énfasis en control."
+        },
+        {
+          id: "D1-H", codigo: "H",
+          nombre: "Paseo del granjero (farmer's carry)",
+          grupos: ["Core"],
+          series_base: 3, reps: "30-40 s", tempo: "iso",
+          descanso: "90s",
+          nota: "Pesas pesadas a los lados, postura alta, hombros atrás, abdomen firme, pasos cortos. Se mide por tiempo; suelta si la postura se rompe. Peso = kg por mano."
+        }
+      ]
+    }
+  ]
+};
+
+/* ============================================
+   ESTADO GLOBAL Y PERSISTENCIA
+   ============================================ */
+const STORAGE_KEY = "rutina_vero_v1";
+const CONFIG_KEY = "rutina_vero_config_v1";
+
+let state = loadState();
+let config = loadConfig();
+let currentWeek = state.currentWeek || 1;
+let currentDay = state.currentDay || "D1";
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return { weeks: {}, currentWeek: 1, currentDay: "D1" };
+}
+
+function loadConfig() {
+  try {
+    const raw = localStorage.getItem(CONFIG_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return { sheetsUrl: "", sheetsToken: "" };
+}
+
+function saveState() {
+  state.currentWeek = currentWeek;
+  state.currentDay = currentDay;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    setStatus("local", "ok");
+  } catch (e) {
+    setStatus("local", "warn");
+  }
+}
+
+function saveConfig() {
+  localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+}
+
+function getSessionKey(week, dayId) {
+  return `W${week}_${dayId}`;
+}
+
+function getSessionData(week, dayId) {
+  const key = getSessionKey(week, dayId);
+  if (!state.weeks[key]) {
+    state.weeks[key] = {
+      week, dayId,
+      started_at: null,
+      wellness: {},
+      exercises: {}
+    };
+  }
+  return state.weeks[key];
+}
+
+function getExerciseData(session, exerciseId) {
+  if (!session.exercises[exerciseId]) {
+    session.exercises[exerciseId] = {
+      sets: [],
+      notes: ""
+    };
+  }
+  return session.exercises[exerciseId];
+}
+
+/* ============================================
+   RENDER
+   ============================================ */
+function getSeriesForWeek(baseSeries, weekInfo) {
+  const s = baseSeries + weekInfo.series_extra;
+  // Deload nunca baja de 2 series (antes era Math.max(1,…) que dejaba 1 serie en ejercicios con base:2)
+  return Math.max(2, s);
+}
+
+// Piso de RIR por ejercicio (protección articular).
+// Ej.: semana pide RIR 1 pero el ejercicio tiene rir_min: 3 → se respeta 3.
+// Un RIR más alto significa MENOS esfuerzo, por eso se toma el máximo.
+function getEffectiveRir(exercise, weekInfo) {
+  if (exercise.rir_min !== undefined && exercise.rir_min !== null) {
+    return Math.max(weekInfo.rir, exercise.rir_min);
+  }
+  return weekInfo.rir;
+}
+
+function getVarianteForWeek(exercise, week) {
+  // Semanas pares (2, 4) usan variante si existe
+  if (exercise.variante_semana_par && (week === 2 || week === 4)) {
+    return exercise.variante_semana_par;
+  }
+  return exercise.nombre;
+}
+
+function getPrevSessionNote(week, dayId, exerciseId) {
+  // Busca la última semana < current donde se registró algo
+  for (let w = week - 1; w >= 1; w--) {
+    const key = getSessionKey(w, dayId);
+    const sess = state.weeks[key];
+    if (sess && sess.exercises[exerciseId]) {
+      const ex = sess.exercises[exerciseId];
+      if (ex.sets && ex.sets.length > 0) {
+        const completed = ex.sets.filter(s => s && s.done);
+        if (completed.length > 0) {
+          const last = completed[completed.length - 1];
+          return `Sem ${w}: mejor ${last.peso || "–"}kg × ${last.reps || "–"} reps @RIR ${last.rir !== undefined && last.rir !== "" ? last.rir : "–"}`;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Busca la última serie registrada (con peso o reps) para este ejercicio.
+ * Prioridad:
+ * 1. Serie anterior completada en la MISMA sesión (serie i-1)
+ * 2. Última serie completada en semanas previas del mismo día
+ * Retorna { peso, reps, rir } o null.
+ */
+function getSuggestedSet(week, dayId, exerciseId, setIndex) {
+  // 1. Misma sesión, serie anterior
+  const sess = state.weeks[getSessionKey(week, dayId)];
+  if (sess && sess.exercises[exerciseId]) {
+    const sets = sess.exercises[exerciseId].sets || [];
+    for (let i = setIndex - 1; i >= 0; i--) {
+      const s = sets[i];
+      if (s && (s.peso || s.reps)) {
+        return { peso: s.peso, reps: s.reps, rir: s.rir, source: "prev_set" };
+      }
+    }
+  }
+  // 2. Semanas previas, mismo día y ejercicio - última serie completada
+  for (let w = week - 1; w >= 1; w--) {
+    const prevSess = state.weeks[getSessionKey(w, dayId)];
+    if (prevSess && prevSess.exercises[exerciseId]) {
+      const prevSets = prevSess.exercises[exerciseId].sets || [];
+      // Preferir la misma posición de serie si existe
+      if (prevSets[setIndex] && (prevSets[setIndex].peso || prevSets[setIndex].reps)) {
+        return { ...prevSets[setIndex], source: "prev_week" };
+      }
+      // Si no, la última serie completada de esa sesión
+      for (let i = prevSets.length - 1; i >= 0; i--) {
+        const s = prevSets[i];
+        if (s && (s.peso || s.reps)) {
+          return { peso: s.peso, reps: s.reps, rir: s.rir, source: "prev_week" };
+        }
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Parsea el string de descanso del ejercicio a segundos.
+ * Acepta: "2:30", "90s", "3:00", "60s"
+ */
+function parseRestToSeconds(str) {
+  if (!str) return 90;
+  str = str.trim().toLowerCase();
+  if (str.includes(":")) {
+    const [m, s] = str.split(":").map(x => parseInt(x) || 0);
+    return m * 60 + s;
+  }
+  if (str.endsWith("s")) return parseInt(str) || 90;
+  const n = parseInt(str);
+  return isNaN(n) ? 90 : n;
+}
+
+function formatSeconds(s) {
+  if (s < 0) s = 0;
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+}
+
+function renderWeekSelector() {
+  const c = document.getElementById("week-selector");
+  c.innerHTML = "";
+  RUTINA.semanas.forEach(w => {
+    const btn = document.createElement("button");
+    btn.className = "pill" + (w.n === currentWeek ? " active" : "") + (w.deload ? " deload" : "");
+    btn.textContent = `S${w.n}`;
+    btn.title = w.fase;
+    btn.onclick = () => { currentWeek = w.n; saveState(); render(); };
+    c.appendChild(btn);
+  });
+}
+
+function renderDaySelector() {
+  const c = document.getElementById("day-selector");
+  c.innerHTML = "";
+  // Con un solo día por semana el selector de día sobra: se oculta (y su separador).
+  const single = RUTINA.dias.length < 2;
+  c.style.display = single ? "none" : "flex";
+  if (c.previousElementSibling) c.previousElementSibling.style.display = single ? "none" : "block";
+  if (single) return;
+  RUTINA.dias.forEach(d => {
+    const btn = document.createElement("button");
+    btn.className = "pill" + (d.id === currentDay ? " active" : "");
+    btn.textContent = `${d.id} · ${d.nombre}`;
+    btn.onclick = () => { currentDay = d.id; saveState(); render(); };
+    c.appendChild(btn);
+  });
+}
+
+function renderSessionHeader() {
+  const day = RUTINA.dias.find(d => d.id === currentDay);
+  const week = RUTINA.semanas.find(w => w.n === currentWeek);
+  document.getElementById("session-title").textContent =
+    RUTINA.dias.length > 1 ? `Día ${day.id.slice(1)} · ${day.nombre}` : day.nombre;
+  document.getElementById("session-meta").textContent = `${day.foco} · Semana ${week.n} (${week.fase})`;
+  document.getElementById("rir-target").textContent = week.rir;
+  document.getElementById("load-target").textContent = Math.round(week.carga * 100) + "%";
+  document.getElementById("phase-label").textContent = week.fase;
+}
+
+function renderWellness() {
+  const session = getSessionData(currentWeek, currentDay);
+  const c = document.getElementById("wellness-grid");
+  const fields = [
+    { id: "sueno", label: "Sueño (1-5)", type: "select", options: ["", "1", "2", "3", "4", "5"] },
+    { id: "energia", label: "Energía (1-5)", type: "select", options: ["", "1", "2", "3", "4", "5"] },
+    { id: "fatiga_previa", label: "Fatiga natación/baile (1-5)", type: "select", options: ["", "1", "2", "3", "4", "5"] },
+    { id: "molestia", label: "Molestia articular (0-5)", type: "select", options: ["", "0", "1", "2", "3", "4", "5"] },
+    { id: "peso", label: "Peso (kg)", type: "number" }
+  ];
+  c.innerHTML = "";
+  fields.forEach(f => {
+    const div = document.createElement("div");
+    div.className = "wellness-item";
+    const val = session.wellness[f.id] || "";
+    if (f.type === "select") {
+      div.innerHTML = `<label>${f.label}</label><select data-wellness="${f.id}">
+        ${f.options.map(o => `<option value="${o}"${val === o ? " selected" : ""}>${o || "–"}</option>`).join("")}
+      </select>`;
+    } else {
+      div.innerHTML = `<label>${f.label}</label><input type="number" step="0.1" data-wellness="${f.id}" value="${val}">`;
+    }
+    c.appendChild(div);
+  });
+  c.querySelectorAll("[data-wellness]").forEach(el => {
+    el.addEventListener("change", () => {
+      session.wellness[el.dataset.wellness] = el.value;
+      saveState();
+      if (el.dataset.wellness === "molestia" && parseInt(el.value) >= 3) {
+        alert("⚠️ Molestia articular ≥3. Reduce carga o rango en los ejercicios que la provocan, o sustitúyelos por hoy.");
+      }
+    });
+  });
+}
+
+function renderExercises() {
+  const day = RUTINA.dias.find(d => d.id === currentDay);
+  const week = RUTINA.semanas.find(w => w.n === currentWeek);
+  const session = getSessionData(currentWeek, currentDay);
+  const c = document.getElementById("exercises-container");
+  c.innerHTML = "";
+
+  day.ejercicios.forEach(ex => {
+    const series = getSeriesForWeek(ex.series_base, week);
+    const nombreActual = getVarianteForWeek(ex, week.n);
+    const exData = getExerciseData(session, ex.id);
+
+    // Asegurar que haya el número correcto de sets
+    while (exData.sets.length < series) exData.sets.push({ peso: "", reps: "", rir: "", done: false });
+
+    const card = document.createElement("div");
+    card.className = "exercise";
+    card.dataset.exerciseId = ex.id;
+
+    const prevNote = getPrevSessionNote(currentWeek, currentDay, ex.id);
+
+    card.innerHTML = `
+      <div class="exercise-head">
+        <div class="exercise-code">${ex.codigo}</div>
+        <div>
+          <div class="exercise-name">
+            ${nombreActual}
+            ${ex.hombro_flag ? '<span class="hombro-warn">hombro</span>' : ''}
+            ${ex.rir_min !== undefined ? `<span class="hombro-warn">RIR mín ${ex.rir_min}</span>` : ''}
+          </div>
+          <div class="exercise-sub">${ex.grupos.join(" · ")}</div>
+          <div class="exercise-params" style="margin-top: 6px;">
+            <span><strong>${series}</strong>×${ex.reps}</span>
+            <span>Tempo <strong>${ex.tempo}</strong></span>
+            <span>Desc <strong>${ex.descanso}</strong></span>
+            ${ex.nota ? '<button class="tech-note-btn" data-toggle-note="' + ex.id + '">Técnica ▾</button>' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="sets-body">
+        ${prevNote ? `<div class="sets-prev"><strong>↻</strong> ${prevNote}</div>` : ''}
+        <div class="set-row header">
+          <div>#</div>
+          <div>Peso (kg)</div>
+          <div>Reps</div>
+          <div>RIR</div>
+          <div style="text-align: center;">Acción</div>
+        </div>
+        ${exData.sets.slice(0, series).map((set, i) => {
+          const suggestion = getSuggestedSet(currentWeek, currentDay, ex.id, i);
+          const phPeso = suggestion && suggestion.peso ? suggestion.peso : "–";
+          const phReps = suggestion && suggestion.reps ? suggestion.reps : "–";
+          const effRir = getEffectiveRir(ex, week);
+          // El piso de RIR del ejercicio (rir_min) siempre gana, incluso sobre una sugerencia
+          // de una serie/sesión anterior que pudo haberse registrado antes de aplicar el piso.
+          const phRir  = (suggestion && suggestion.rir !== undefined && suggestion.rir !== "")
+            ? Math.max(parseInt(suggestion.rir) || 0, effRir)
+            : effRir;
+          return `
+          <div class="set-row ${set.done ? 'done-row' : ''}">
+            <div class="set-num">${i + 1}</div>
+            <input class="set-input" type="number" step="0.5" inputmode="decimal"
+                   data-ex="${ex.id}" data-set="${i}" data-field="peso"
+                   placeholder="${phPeso}" value="${set.peso || ''}">
+            <input class="set-input" type="text" inputmode="numeric"
+                   data-ex="${ex.id}" data-set="${i}" data-field="reps"
+                   placeholder="${phReps}" value="${set.reps || ''}">
+            <input class="set-input" type="number" step="1" min="0" inputmode="numeric"
+                   data-ex="${ex.id}" data-set="${i}" data-field="rir"
+                   placeholder="${phRir}" value="${set.rir !== undefined && set.rir !== '' ? set.rir : ''}">
+            <button class="btn-fin ${set.done ? 'done' : ''}"
+                    data-finish-ex="${ex.id}" data-finish-set="${i}"
+                    data-rest="${ex.descanso}" data-exname="${nombreActual.replace(/"/g, '&quot;')}">
+              ${set.done ? '✓ OK' : 'Fin'}
+            </button>
+          </div>`;
+        }).join("")}
+        <div class="exercise-notes">
+          <textarea data-ex-note="${ex.id}" placeholder="Notas de la sesión...">${exData.notes || ""}</textarea>
+        </div>
+      </div>
+      ${ex.nota ? `<div class="tech-note-content" id="note-${ex.id}">${ex.nota}</div>` : ''}
+    `;
+    c.appendChild(card);
+  });
+
+  // Bind inputs
+  c.querySelectorAll(".set-input").forEach(inp => {
+    inp.addEventListener("change", (e) => {
+      const exId = e.target.dataset.ex;
+      const setIdx = parseInt(e.target.dataset.set);
+      const field = e.target.dataset.field;
+      const session = getSessionData(currentWeek, currentDay);
+      const exData = getExerciseData(session, exId);
+      exData.sets[setIdx][field] = e.target.value;
+      if (!session.started_at) session.started_at = new Date().toISOString();
+      saveState();
+      scheduleSheetsSync();
+      updateVolumePanel();
+      updateSessionStats();
+    });
+  });
+
+  c.querySelectorAll("[data-finish-ex]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const exId = e.currentTarget.dataset.finishEx;
+      const setIdx = parseInt(e.currentTarget.dataset.finishSet);
+      const restStr = e.currentTarget.dataset.rest;
+      const exName = e.currentTarget.dataset.exname;
+      const session = getSessionData(currentWeek, currentDay);
+      const exData = getExerciseData(session, exId);
+      const wasCompleted = exData.sets[setIdx].done;
+
+      // Si no está completado: marcarlo y commitear valores sugeridos si están vacíos
+      if (!wasCompleted) {
+        const suggestion = getSuggestedSet(currentWeek, currentDay, exId, setIdx);
+        const set = exData.sets[setIdx];
+        const dayInfo = RUTINA.dias.find(d => d.id === currentDay);
+        const exInfo = dayInfo ? dayInfo.ejercicios.find(e => e.id === exId) : null;
+        const weekInfo = RUTINA.semanas.find(w => w.n === currentWeek);
+        const effRir = (exInfo && weekInfo) ? getEffectiveRir(exInfo, weekInfo) : (weekInfo ? weekInfo.rir : null);
+        // Solo usar sugerencia si el campo está vacío
+        if (!set.peso && suggestion && suggestion.peso) set.peso = suggestion.peso;
+        if (!set.reps && suggestion && suggestion.reps) set.reps = suggestion.reps;
+        if ((set.rir === undefined || set.rir === "") && suggestion && suggestion.rir !== undefined && suggestion.rir !== "") {
+          // El piso de RIR del ejercicio siempre gana sobre una sugerencia previa más baja
+          set.rir = String(effRir !== null ? Math.max(parseInt(suggestion.rir) || 0, effRir) : suggestion.rir);
+        } else if (set.rir === undefined || set.rir === "") {
+          // Si no hay sugerencia de RIR, usar el efectivo (semana, salvo que el ejercicio tenga piso más alto)
+          if (effRir !== null) set.rir = String(effRir);
+        }
+        set.done = true;
+        set.timestamp = new Date().toISOString();
+        if (!session.started_at) session.started_at = new Date().toISOString();
+
+        // Iniciar timer de descanso
+        const restSec = parseRestToSeconds(restStr);
+        startRestTimer(restSec, exName, setIdx + 1);
+      } else {
+        // Si ya está completado, destogglar (quitar check)
+        exData.sets[setIdx].done = false;
+      }
+
+      saveState();
+      scheduleSheetsSync();
+      renderExercises();
+      updateVolumePanel();
+      updateSessionStats();
+    });
+  });
+
+  c.querySelectorAll("[data-ex-note]").forEach(ta => {
+    ta.addEventListener("change", (e) => {
+      const exId = e.target.dataset.exNote;
+      const session = getSessionData(currentWeek, currentDay);
+      const exData = getExerciseData(session, exId);
+      exData.notes = e.target.value;
+      saveState();
+      scheduleSheetsSync();
+    });
+  });
+
+  c.querySelectorAll("[data-toggle-note]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const id = e.target.dataset.toggleNote;
+      const el = document.getElementById("note-" + id);
+      if (el) el.classList.toggle("open");
+    });
+  });
+}
+
+function updateVolumePanel() {
+  const week = RUTINA.semanas.find(w => w.n === currentWeek);
+  const done = {}, plan = {};
+  // Series completadas vs planificadas de la semana, por grupo (un ejercicio multigrupo cuenta en cada uno)
+  RUTINA.dias.forEach(day => {
+    const session = state.weeks[getSessionKey(currentWeek, day.id)];
+    day.ejercicios.forEach(ex => {
+      const series = getSeriesForWeek(ex.series_base, week);
+      const exData = session && session.exercises && session.exercises[ex.id];
+      const doneSets = exData ? (exData.sets || []).slice(0, series).filter(s => s && s.done).length : 0;
+      ex.grupos.forEach(g => {
+        if (!RUTINA.grupos_volumen.includes(g)) return;
+        plan[g] = (plan[g] || 0) + series;
+        done[g] = (done[g] || 0) + doneSets;
+      });
+    });
+  });
+
+  const c = document.getElementById("volume-grid");
+  c.innerHTML = "";
+  RUTINA.grupos_volumen.forEach(grupo => {
+    const target = plan[grupo] || 0;
+    const d = done[grupo] || 0;
+    const pct = target > 0 ? d / target : 0;
+    let color = "var(--accent)";
+    if (pct >= 1) color = "var(--ok)";
+    else if (pct < 0.5) color = "var(--warn)";
+
+    const cell = document.createElement("div");
+    cell.className = "volume-cell";
+    cell.innerHTML = `
+      <div class="label">${grupo}</div>
+      <div class="value" style="color: ${color}">${d} <span style="color: var(--text-faint); font-size: 12px;">/ ${target}</span></div>
+      <div class="target">Plan S${week.n}</div>
+    `;
+    c.appendChild(cell);
+  });
+}
+
+function updateSessionStats() {
+  const session = getSessionData(currentWeek, currentDay);
+  let total = 0, done = 0;
+  const day = RUTINA.dias.find(d => d.id === currentDay);
+  const week = RUTINA.semanas.find(w => w.n === currentWeek);
+  day.ejercicios.forEach(ex => {
+    const series = getSeriesForWeek(ex.series_base, week);
+    total += series;
+    const exData = session.exercises[ex.id];
+    if (exData) done += (exData.sets || []).slice(0, series).filter(s => s && s.done).length;
+  });
+  document.getElementById("session-stats").textContent = `${done}/${total} series`;
+  updateFinishSection();
+}
+
+function updateFinishSection() {
+  const session = getSessionData(currentWeek, currentDay);
+  const day = RUTINA.dias.find(d => d.id === currentDay);
+  const week = RUTINA.semanas.find(w => w.n === currentWeek);
+
+  let total = 0, done = 0;
+  day.ejercicios.forEach(ex => {
+    const series = getSeriesForWeek(ex.series_base, week);
+    total += series;
+    const exData = session.exercises[ex.id];
+    if (exData) done += (exData.sets || []).slice(0, series).filter(s => s && s.done).length;
+  });
+
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const summaryEl = document.getElementById("finish-summary");
+  const btn = document.getElementById("btn-finish-session");
+  const label = document.getElementById("finish-btn-label");
+
+  // Calcular duración si la sesión está iniciada
+  let durationStr = "";
+  if (session.started_at) {
+    const endAt = session.finished_at ? new Date(session.finished_at) : new Date();
+    const startAt = new Date(session.started_at);
+    const mins = Math.round((endAt - startAt) / 60000);
+    durationStr = mins > 0 ? ` · ${mins} min` : "";
+  }
+
+  if (session.finished_at) {
+    const finishedDate = new Date(session.finished_at);
+    const hora = finishedDate.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
+    summaryEl.innerHTML = `<strong>✓ Rutina completada</strong> a las ${hora}${durationStr} · ${done}/${total} series (${pct}%)`;
+    btn.classList.add("completed");
+    label.textContent = "Reabrir sesión";
+  } else {
+    summaryEl.innerHTML = `Progreso: <strong>${done}/${total} series</strong> (${pct}%)${durationStr}`;
+    btn.classList.remove("completed");
+    label.textContent = done === 0 ? "Finalizar rutina del día" : (done < total ? `Finalizar rutina (${total - done} series sin completar)` : "✓ Finalizar rutina del día");
+  }
+}
+
+function render() {
+  renderWeekSelector();
+  renderDaySelector();
+  renderSessionHeader();
+  renderWellness();
+  renderExercises();
+  updateVolumePanel();
+  updateSessionStats();
+  updateFinishSection();
+}
+
+/* ============================================
+   REST TIMER
+   ============================================ */
+let restState = {
+  running: false,
+  paused: false,
+  pausedRemaining: 0,
+  secondsLeft: 0,
+  intervalId: null,
+  endsAt: 0,
+  exerciseName: "",
+  setNumber: 0
+};
+
+function startRestTimer(seconds, exerciseName, setNumber) {
+  stopRestTimer(); // limpia timer anterior
+  restState.running = true;
+  restState.paused = false;
+  restState.secondsLeft = seconds;
+  restState.endsAt = Date.now() + seconds * 1000;
+  restState.exerciseName = exerciseName;
+  restState.setNumber = setNumber;
+
+  const timerEl = document.getElementById("rest-timer");
+  timerEl.classList.remove("finished", "paused");
+  timerEl.classList.add("visible");
+  document.getElementById("rest-exercise").textContent = `${exerciseName} · Serie ${setNumber}`;
+  document.getElementById("rest-label").textContent = "Descanso";
+  document.getElementById("rest-pause").textContent = "❚❚";
+  updateRestDisplay();
+  startRestInterval();
+
+  // Pequeña vibración al iniciar (feedback háctico)
+  if (navigator.vibrate) navigator.vibrate(30);
+}
+
+function startRestInterval() {
+  if (restState.intervalId) clearInterval(restState.intervalId);
+  restState.intervalId = setInterval(() => {
+    if (restState.paused) return;
+    const remaining = Math.round((restState.endsAt - Date.now()) / 1000);
+    restState.secondsLeft = remaining;
+    updateRestDisplay();
+    if (remaining <= 0 && restState.running) {
+      onRestFinished();
+      restState.running = false; // evitar que vuelva a disparar el beep
+    }
+  }, 250);
+}
+
+function stopRestTimer() {
+  if (restState.intervalId) clearInterval(restState.intervalId);
+  restState.intervalId = null;
+  restState.running = false;
+  restState.paused = false;
+}
+
+function hideRestTimer() {
+  stopRestTimer();
+  document.getElementById("rest-timer").classList.remove("visible", "finished", "paused");
+}
+
+function togglePauseRestTimer() {
+  const timerEl = document.getElementById("rest-timer");
+  const pauseBtn = document.getElementById("rest-pause");
+
+  if (restState.paused) {
+    // Reanudar: recalcular endsAt desde el tiempo que quedaba al pausar
+    restState.endsAt = Date.now() + restState.pausedRemaining * 1000;
+    restState.paused = false;
+    restState.running = restState.pausedRemaining > 0;
+    timerEl.classList.remove("paused");
+    if (restState.pausedRemaining <= 0) {
+      // Estaba en negativo → seguir contando tiempo excedido
+      restState.endsAt = Date.now() - (-restState.pausedRemaining) * 1000;
+      document.getElementById("rest-label").textContent = "¡Listo! A la siguiente";
+    } else {
+      document.getElementById("rest-label").textContent = "Descanso";
+    }
+    pauseBtn.textContent = "❚❚";
+  } else {
+    // Pausar: guardar tiempo restante
+    restState.pausedRemaining = Math.round((restState.endsAt - Date.now()) / 1000);
+    restState.paused = true;
+    timerEl.classList.add("paused");
+    document.getElementById("rest-label").textContent = "Pausado";
+    pauseBtn.textContent = "▶";
+  }
+}
+
+function updateRestDisplay() {
+  const el = document.getElementById("rest-time");
+  if (restState.secondsLeft >= 0) {
+    el.textContent = formatSeconds(restState.secondsLeft);
+  } else {
+    // Tiempo excedido — contador en negativo
+    el.textContent = "+" + formatSeconds(-restState.secondsLeft);
+  }
+}
+
+function onRestFinished() {
+  const timerEl = document.getElementById("rest-timer");
+  timerEl.classList.add("finished");
+  document.getElementById("rest-label").textContent = "¡Listo! A la siguiente";
+  // Beep + vibración
+  playBeep();
+  if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+  // Seguir contando (en negativo) hasta que el usuario cierre
+  // No detener el interval todavía
+}
+
+function playBeep() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    // Tres pulsos rápidos
+    [0, 0.15, 0.3].forEach(delay => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = 880;
+      osc.type = "sine";
+      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + delay + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.12);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + 0.13);
+    });
+  } catch (e) { /* silencioso */ }
+}
+
+document.getElementById("rest-close").onclick = hideRestTimer;
+document.getElementById("rest-pause").onclick = togglePauseRestTimer;
+document.getElementById("rest-plus").onclick = () => {
+  if (restState.paused) {
+    restState.pausedRemaining += 15;
+    // Actualizar display manualmente porque el interval está pausado
+    restState.secondsLeft = restState.pausedRemaining;
+    updateRestDisplay();
+    return;
+  }
+  if (!restState.running && restState.secondsLeft <= 0) {
+    // Si ya terminó, reiniciar con 15s
+    restState.running = true;
+    restState.endsAt = Date.now() + 15000;
+    document.getElementById("rest-timer").classList.remove("finished");
+    document.getElementById("rest-label").textContent = "Descanso";
+    startRestInterval();
+  } else {
+    restState.endsAt += 15000;
+    restState.secondsLeft = Math.round((restState.endsAt - Date.now()) / 1000);
+    updateRestDisplay();
+  }
+};
+document.getElementById("rest-minus").onclick = () => {
+  if (restState.paused) {
+    restState.pausedRemaining -= 15;
+    restState.secondsLeft = restState.pausedRemaining;
+    updateRestDisplay();
+    return;
+  }
+  restState.endsAt -= 15000;
+  restState.secondsLeft = Math.round((restState.endsAt - Date.now()) / 1000);
+  updateRestDisplay();
+  if (restState.secondsLeft <= 0 && restState.running) {
+    onRestFinished();
+    restState.running = false;
+  }
+};
+
+// Mantener el timer funcionando aunque la pestaña esté en background (recalcular al volver)
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && restState.intervalId && !restState.paused) {
+    restState.secondsLeft = Math.round((restState.endsAt - Date.now()) / 1000);
+    updateRestDisplay();
+    if (restState.secondsLeft <= 0 && restState.running) {
+      onRestFinished();
+      restState.running = false;
+    }
+  }
+});
+
+/* ============================================
+   EXPORT / IMPORT / RESET
+   ============================================ */
+document.getElementById("btn-export").onclick = () => {
+  const payload = { state, config: { sheetsUrl: config.sheetsUrl } /* no token */, exported_at: new Date().toISOString(), version: "v1" };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `rutina_vero_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+document.getElementById("btn-import").onclick = () => {
+  document.getElementById("modal-import").classList.add("open");
+};
+document.getElementById("btn-import-close").onclick = () => {
+  document.getElementById("modal-import").classList.remove("open");
+};
+document.getElementById("btn-import-confirm").onclick = () => {
+  try {
+    const data = JSON.parse(document.getElementById("import-data").value);
+    if (data.state && data.state.weeks) {
+      state = data.state;
+      saveState();
+      document.getElementById("modal-import").classList.remove("open");
+      render();
+      alert("Datos importados");
+    } else throw new Error("Estructura inválida");
+  } catch (e) {
+    alert("JSON inválido: " + e.message);
+  }
+};
+
+document.getElementById("btn-reset").onclick = () => {
+  if (confirm("¿Borrar TODOS los datos registrados? Esta acción no se puede deshacer.")) {
+    state = { weeks: {}, currentWeek: 1, currentDay: "D1" };
+    currentWeek = 1; currentDay = "D1";
+    saveState();
+    render();
+  }
+};
+
+/* ============================================
+   FINALIZAR RUTINA DEL DÍA
+   ============================================ */
+document.getElementById("btn-finish-session").onclick = () => {
+  const session = getSessionData(currentWeek, currentDay);
+  const day = RUTINA.dias.find(d => d.id === currentDay);
+  const week = RUTINA.semanas.find(w => w.n === currentWeek);
+
+  if (session.finished_at) {
+    // Reabrir sesión
+    if (confirm("¿Reabrir esta sesión? Podrás seguir registrando series.")) {
+      session.finished_at = null;
+      saveState();
+      scheduleSheetsSync();
+      render();
+    }
+    return;
+  }
+
+  // Calcular stats para el resumen
+  let total = 0, done = 0;
+  const porGrupo = {};
+  day.ejercicios.forEach(ex => {
+    const series = getSeriesForWeek(ex.series_base, week);
+    total += series;
+    const exData = session.exercises[ex.id];
+    if (exData) {
+      const d = (exData.sets || []).slice(0, series).filter(s => s && s.done).length;
+      done += d;
+      ex.grupos.forEach(g => {
+        if (!RUTINA.grupos_volumen.includes(g)) return;
+        porGrupo[g] = (porGrupo[g] || 0) + d;
+      });
+    }
+  });
+
+  const incompleto = done < total;
+  const msg = incompleto
+    ? `Te faltan ${total - done} series por completar.\n\n¿Finalizar la rutina igual?`
+    : `¡Completaste todas las series (${done}/${total})!\n\n¿Finalizar la rutina?`;
+
+  if (!confirm(msg)) return;
+
+  // Marcar finalizada
+  session.finished_at = new Date().toISOString();
+  if (!session.started_at) session.started_at = session.finished_at;
+
+  // Cerrar timer de descanso si estaba abierto
+  hideRestTimer();
+
+  saveState();
+  scheduleSheetsSync();
+
+  // Mostrar toast de resumen
+  showSessionSummary(session, day, done, total, porGrupo);
+  render();
+};
+
+function showSessionSummary(session, day, done, total, porGrupo) {
+  const duration = session.started_at
+    ? Math.round((new Date(session.finished_at) - new Date(session.started_at)) / 60000)
+    : 0;
+
+  const grupoList = Object.entries(porGrupo)
+    .map(([g, n]) => `${g}: ${n}`)
+    .join(" · ");
+
+  const msg = `
+✓ ${day.nombre} completado
+
+${done}/${total} series · ${duration} min
+
+${grupoList}
+
+Buen trabajo 💪
+  `.trim();
+
+  alert(msg);
+}
+
+/* ============================================
+   GOOGLE SHEETS SYNC
+   ============================================ */
+let syncTimeout = null;
+let lastSyncResult = null;
+
+function scheduleSheetsSync() {
+  if (!config.sheetsUrl) return;
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(() => syncToSheets(false), 2000);
+}
+
+function logSync(msg, level) {
+  lastSyncResult = { msg, level, at: new Date().toLocaleTimeString() };
+  const el = document.getElementById("sheets-msg");
+  if (el && document.getElementById("modal-sheets").classList.contains("open")) {
+    el.textContent = `[${lastSyncResult.at}] ${msg}`;
+    el.style.color = level === "ok" ? "var(--ok)" : level === "warn" ? "var(--warn)" : "var(--danger)";
+  }
+  console.log(`[Sheets ${level}]`, msg);
+}
+
+async function syncToSheets(isFull) {
+  if (!config.sheetsUrl) return false;
+  setStatus("sheets", "warn");
+  const rows = buildSheetRows();
+  if (rows.length === 0 && !isFull) {
+    logSync("Nada para sincronizar aún", "warn");
+    setStatus("sheets", "ok");
+    return true;
+  }
+  try {
+    const payload = {
+      token: config.sheetsToken,
+      atleta: RUTINA.meta.atleta,
+      timestamp: new Date().toISOString(),
+      rows: rows
+    };
+    // Usar mode "cors" — Apps Script soporta CORS para text/plain
+    const resp = await fetch(config.sheetsUrl, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+      redirect: "follow"
+    });
+    if (!resp.ok) {
+      logSync(`HTTP ${resp.status} — ${resp.statusText}. Verifica que el Web App esté desplegado con acceso "Anyone".`, "error");
+      setStatus("sheets", "warn");
+      return false;
+    }
+    const text = await resp.text();
+    let data;
+    try { data = JSON.parse(text); } catch (e) {
+      logSync(`Respuesta no-JSON. Primeros 200 chars: ${text.slice(0,200)}`, "error");
+      setStatus("sheets", "warn");
+      return false;
+    }
+    if (data.ok) {
+      logSync(`✓ ${data.rows || 0} filas escritas en Sheets`, "ok");
+      setStatus("sheets", "ok");
+      return true;
+    } else {
+      logSync(`✗ Apps Script devolvió error: ${data.error}`, "error");
+      setStatus("sheets", "warn");
+      return false;
+    }
+  } catch (e) {
+    // Error típico: CORS (si el Apps Script no está bien desplegado) o red
+    logSync(`Fetch falló: ${e.message}. Causas comunes: (1) Web App no desplegado como "Anyone", (2) URL incorrecta (debe terminar en /exec), (3) script con error de sintaxis.`, "error");
+    setStatus("sheets", "warn");
+    console.error("Sheets sync failed:", e);
+    return false;
+  }
+}
+
+function buildSheetRows() {
+  // Una fila por set completado, con todo el contexto
+  const rows = [];
+  Object.entries(state.weeks).forEach(([key, sess]) => {
+    const day = RUTINA.dias.find(d => d.id === sess.dayId);
+    if (!day) return;
+    const weekInfo = RUTINA.semanas.find(w => w.n === sess.week);
+    // Duración total de la sesión en minutos (si finalizó)
+    let duracionMin = "";
+    if (sess.started_at && sess.finished_at) {
+      duracionMin = Math.round((new Date(sess.finished_at) - new Date(sess.started_at)) / 60000);
+    }
+    day.ejercicios.forEach(ex => {
+      const exData = sess.exercises[ex.id];
+      if (!exData || !exData.sets) return;
+      exData.sets.forEach((set, i) => {
+        if (!set || (!set.peso && !set.reps && !set.done)) return;
+        rows.push({
+          fecha: sess.started_at || "",
+          fecha_fin: sess.finished_at || "",
+          duracion_min: duracionMin,
+          sesion_estado: sess.finished_at ? "FINALIZADA" : "EN_CURSO",
+          semana: sess.week,
+          fase: weekInfo ? weekInfo.fase : "",
+          dia: sess.dayId,
+          dia_nombre: day.nombre,
+          ejercicio_id: ex.id,
+          ejercicio: getVarianteForWeek(ex, sess.week),
+          grupo: ex.grupos.join("|"),
+          set_num: i + 1,
+          peso_kg: set.peso,
+          reps: set.reps,
+          rir: set.rir,
+          completado: set.done ? "SI" : "NO",
+          tempo: ex.tempo,
+          descanso: ex.descanso,
+          rir_objetivo: weekInfo ? getEffectiveRir(ex, weekInfo) : "",
+          notas_ejercicio: exData.notes || "",
+          sueno: sess.wellness.sueno || "",
+          energia: sess.wellness.energia || "",
+          fatiga_previa: sess.wellness.fatiga_previa || "",
+          molestia: sess.wellness.molestia || "",
+          peso_corporal: sess.wellness.peso || ""
+        });
+      });
+    });
+  });
+  return rows;
+}
+
+document.getElementById("btn-sheets").onclick = () => {
+  document.getElementById("sheets-url").value = config.sheetsUrl || "";
+  document.getElementById("sheets-token").value = config.sheetsToken || "";
+  document.getElementById("modal-sheets").classList.add("open");
+};
+document.getElementById("btn-sheets-close").onclick = () => {
+  document.getElementById("modal-sheets").classList.remove("open");
+};
+document.getElementById("btn-sheets-save").onclick = () => {
+  config.sheetsUrl = document.getElementById("sheets-url").value.trim();
+  config.sheetsToken = document.getElementById("sheets-token").value.trim();
+  saveConfig();
+  logSync("✓ Configuración guardada", "ok");
+  setStatus("sheets", config.sheetsUrl ? "ok" : "off");
+};
+
+document.getElementById("btn-sheets-test").onclick = async () => {
+  config.sheetsUrl = document.getElementById("sheets-url").value.trim();
+  config.sheetsToken = document.getElementById("sheets-token").value.trim();
+  saveConfig();
+  if (!config.sheetsUrl) { logSync("Ingresá la URL primero", "warn"); return; }
+  if (!config.sheetsUrl.endsWith("/exec")) {
+    logSync("⚠ La URL debe terminar en /exec. La tuya termina en: " + config.sheetsUrl.slice(-20), "warn");
+    return;
+  }
+  logSync("Enviando ping...", "warn");
+  try {
+    const resp = await fetch(config.sheetsUrl, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ ping: true, token: config.sheetsToken, atleta: RUTINA.meta.atleta, timestamp: new Date().toISOString() }),
+      redirect: "follow"
+    });
+    if (!resp.ok) {
+      logSync(`✗ HTTP ${resp.status}. Verifica deploy con acceso "Anyone".`, "error");
+      return;
+    }
+    const text = await resp.text();
+    let data;
+    try { data = JSON.parse(text); } catch (e) {
+      logSync(`✗ Respuesta no-JSON. Probablemente el deploy no ejecuta doPost. Primeros 200 chars: ${text.slice(0,200)}`, "error");
+      return;
+    }
+    if (data.ok) {
+      logSync("✓ Ping exitoso. Fila 'PING' agregada al Sheet. Conexión funcionando.", "ok");
+    } else {
+      logSync(`✗ Apps Script: ${data.error}`, "error");
+    }
+  } catch (e) {
+    logSync(`✗ ${e.message}. ¿El deploy está configurado como "Anyone"?`, "error");
+  }
+};
+
+document.getElementById("btn-sheets-sync").onclick = async () => {
+  logSync("Sincronizando todo el historial...", "warn");
+  await syncToSheets(true);
+};
+
+function setStatus(which, state) {
+  const dot = document.getElementById(which + "-dot");
+  if (!dot) return;
+  dot.className = "dot" + (state === "off" ? " off" : state === "warn" ? " warn" : "");
+}
+
+/* ============================================
+   PWA: Service Worker + botón Instalar
+   ============================================ */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(err => console.warn("SW fallo:", err));
+  });
+}
+
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const btn = document.getElementById("btn-install");
+  if (btn) btn.style.display = "inline-block";
+});
+
+// Exponer handler del botón instalar (se asigna más adelante si existe)
+async function handleInstall() {
+  if (!deferredInstallPrompt) {
+    alert("Para instalar en iPhone: Safari → Compartir → Agregar a pantalla de inicio.\nPara instalar en Android/desktop: el navegador debería ofrecer la opción automáticamente. Si no aparece, verifica que estés accediendo por HTTPS (no file://).");
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  const result = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  const btn = document.getElementById("btn-install");
+  if (btn) btn.style.display = "none";
+}
+
+window.addEventListener("appinstalled", () => {
+  const btn = document.getElementById("btn-install");
+  if (btn) btn.style.display = "none";
+});
+
+/* ============================================
+   INIT
+   ============================================ */
+setStatus("local", "ok");
+setStatus("sheets", config.sheetsUrl ? "ok" : "off");
+render();
+
+/* ============================================
+   APPS SCRIPT para copiar (se muestra en el modal)
+   ============================================ */
+const APPS_SCRIPT_CODE = `const SECRET_TOKEN = "cambia-este-token"; // debe coincidir con el token de la app
+const SHEET_NAME = "Rutina";
+const HEADERS = [
+  "fecha","fecha_fin","duracion_min","sesion_estado",
+  "semana","fase","dia","dia_nombre","ejercicio_id","ejercicio","grupo",
+  "set_num","peso_kg","reps","rir","completado","tempo","descanso","rir_objetivo",
+  "notas_ejercicio","sueno","energia","fatiga_previa","molestia","peso_corporal",
+  "atleta","sync_timestamp"
+];
+const ATLETA_COL_IDX = 25; // índice 0-based de "atleta" en HEADERS
+
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    ok: true,
+    message: "Apps Script activo. Usa POST para enviar datos.",
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    if (!e || !e.postData || !e.postData.contents) {
+      return jsonOut({ok: false, error: "Sin postData"});
+    }
+    const data = JSON.parse(e.postData.contents);
+
+    if (SECRET_TOKEN && data.token !== SECRET_TOKEN) {
+      return jsonOut({ok: false, error: "token invalido"});
+    }
+
+    const sh = getOrCreateSheet();
+
+    if (data.ping) {
+      const pingRow = new Array(HEADERS.length).fill("");
+      pingRow[0] = "PING_" + new Date().toISOString();
+      pingRow[ATLETA_COL_IDX] = data.atleta || "";
+      pingRow[HEADERS.length - 1] = data.timestamp || new Date().toISOString();
+      sh.appendRow(pingRow);
+      return jsonOut({ok: true, ping: true, rows: 1});
+    }
+
+    const rows = data.rows || [];
+    const lastRow = sh.getLastRow();
+    if (lastRow > 1) {
+      const allData = sh.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
+      const keepRows = allData.filter(function(r) {
+        return r[ATLETA_COL_IDX] !== data.atleta && r[0] !== "" && String(r[0]).indexOf("PING") !== 0;
+      });
+      sh.getRange(2, 1, lastRow - 1, HEADERS.length).clearContent();
+      if (keepRows.length > 0) {
+        sh.getRange(2, 1, keepRows.length, HEADERS.length).setValues(keepRows);
+      }
+    }
+
+    const output = rows.map(function(r) {
+      return [
+        r.fecha, r.fecha_fin || "", r.duracion_min || "", r.sesion_estado || "",
+        r.semana, r.fase, r.dia, r.dia_nombre, r.ejercicio_id, r.ejercicio, r.grupo,
+        r.set_num, r.peso_kg, r.reps, r.rir, r.completado, r.tempo, r.descanso, r.rir_objetivo,
+        r.notas_ejercicio, r.sueno, r.energia, r.fatiga_previa, r.molestia, r.peso_corporal,
+        data.atleta, data.timestamp
+      ];
+    });
+    if (output.length > 0) {
+      sh.getRange(sh.getLastRow() + 1, 1, output.length, HEADERS.length).setValues(output);
+    }
+
+    return jsonOut({ok: true, rows: output.length});
+
+  } catch (err) {
+    return jsonOut({ok: false, error: err.toString()});
+  }
+}
+
+function getOrCreateSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(SHEET_NAME);
+  if (!sh) {
+    sh = ss.insertSheet(SHEET_NAME);
+    sh.appendRow(HEADERS);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+function jsonOut(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
+document.getElementById("script-code").textContent = APPS_SCRIPT_CODE;
+document.getElementById("link-show-script").onclick = (e) => {
+  e.preventDefault();
+  const b = document.getElementById("script-block");
+  b.style.display = b.style.display === "none" ? "block" : "none";
+};
+document.getElementById("btn-copy-script").onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(APPS_SCRIPT_CODE);
+    document.getElementById("btn-copy-script").textContent = "✓ Copiado";
+    setTimeout(() => { document.getElementById("btn-copy-script").textContent = "Copiar script"; }, 2000);
+  } catch (e) {
+    // Fallback: seleccionar texto
+    const range = document.createRange();
+    range.selectNode(document.getElementById("script-code"));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+  }
+};
+</script>
+</body>
+</html>
